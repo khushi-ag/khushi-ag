@@ -1,0 +1,32 @@
+{
+    "name": "SCD1_DF",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "AzureSqlTable2",
+                        "type": "DatasetReference"
+                    },
+                    "name": "source1"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "DestinationDataset_vma",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink1"
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "AlterRow1"
+                }
+            ],
+            "script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 alterRow(upsertIf(1==1)) ~> AlterRow1\nAlterRow1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['name','address'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+        }
+    }
+}

@@ -1,0 +1,20 @@
+TableName,Category,Date,Days,Target,Actual,
+AvailabilityStatus,Gas Processing Plants,Prop_0,Prop_38,97,Prop_39,
+AvailabilityStatus,Overall Plant Availability,Prop_0,Prop_2,98,Prop_3,
+AvailabilityStatus,Critical Equipment Availability,Prop_0,Prop_35,97,Pro_36,
+AvailabilityStatus,Platforms,Prop_0,Prop_106,97,Prop_107,
+AvailabilityStatus,Crude Stabilization Units,Prop_0,Prop_41,97,Prop_42,
+AvailabilityStatus,Crude Export,Prop_0,Prop_44,97,Prop_45,
+AvailabilityStatus,Power Generation Units,Prop_0,Prop_72,97,Prop_78,
+AvailabilityStatus,Utilities ,Prop_0,Prop_77,97,Prop_73,
+,,,,,,
+TableName,Category,date,Condition_Montioring,Schedule_Maintanance,Critical_Function_Testing,
+DMR_CBConsiderations,DMR-CBconsiderations,Prop_0,Prop_218,Prop_219,Prop_220,
+,,,,,,
+TableName,Category,date,Equipment,DateOfUnavailability,NumberOfDays,Remarks
+DMR_CBEquipment,DMR-CBEquipment1,Prop_0,Prop_221,Prop_222,Prop_223,Prop_224
+DMR_CBEquipment,DMR-CBEquipment2,Prop_0,Prop_225,Prop_226,Prop_227,Prop_228
+,,,,,,
+,,,,,,
+considerations,Offhore/SuvaliDMR/CurrentFinancialyear/Considerations,,,,,
+Finalconsiderations,Offhore/SuvaliDMR/CurrentFinancialyear/Considerations,,,,,

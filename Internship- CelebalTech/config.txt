@@ -1,0 +1,53 @@
+1.resources: newpract
+2.sql db: dbname- myadfdb; servername & username- myadfdbserver; 
+password- 123qwe,./123
+3.storage: name- newpractstorage
+4.data factory: name- newpractdf
+5.data lake: name- newpractlake
+	>>create a storage a/c in that in Advance section tick data lake gen-2
+6.logic app: name- newpractlogicapp 
+
+zoho people- Khushi1741
+celebal- Kag17401
+-----------------------------------------------
+hardikagarwal@jklu.edu.in 
+pass- Lavi@1234
+
+resource- Adfresource
+sql db name- adfdb; servername/username- adfdbserver2; pass- 123qwe,./123
+db name for backup- adfdatabase
+storage- storageadftask [like- storage adf task]
+datafactory- adfdatafacories
+logic app- adflogic
+virtual machine- username: AdfVirtualMachine pass- 123qwe,./123
+-----------------------------------------------
+anishaagarwal@jklu.edu.in
+pass- Lavi@123456789
+
+resource- ResourceAdfNew
+sql db name- Adfdb; servername/username- adfnewserver; pass- 123qwe,./123
+storage- adfstoragenew
+datafactory- AdfDataFactories1
+app Registration- appReg1
+-----------------------------------------------
+sql server authentication.
+login/username- mylocaldb
+pass- 001122
+server name- DESKTOP-9CA7H5B
+server type- databse engine
+db name- master
+-----------------------------------------------
+//resume
+https://management.azure.com/subscriptions/d8dd8543-9284-4136-be3f-16a914444cb6/resourceGroups/Adfresouce/providers/Microsoft.Sql/servers/adfdbserver2/databases/datawarehouseadf/resume?api-version=2020-08-01-preview 
+
+sub id: d8dd8543-9284-4136-be3f-16a914444cb6
+resource- Adfresouce
+servername- adfdbserver2.database.windows.net
+dbname- datawarehouseadf 
+
+//pause
+https://management.azure.com/subscriptions/d8dd8543-9284-4136-be3f-16a914444cb6/resourceGroups/Adfresouce/providers/Microsoft.Sql/servers/adfdbserver2/databases/datawarehouseadf/pause?api-version=2020-08-01-preview
+
+-----------------------------------------------
+SAP Universal email id- celebaltech
+Pass- Kag@1741

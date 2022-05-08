@@ -1,0 +1,64 @@
+{
+    "name": "SCD2_DF",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "fromSource",
+                        "type": "DatasetReference"
+                    },
+                    "name": "source1"
+                },
+                {
+                    "dataset": {
+                        "referenceName": "DestinationDataset_vma",
+                        "type": "DatasetReference"
+                    },
+                    "name": "empTbl"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "DestinationDataset_vma",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink1"
+                },
+                {
+                    "dataset": {
+                        "referenceName": "DestinationDataset_vma",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink2"
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "isActive"
+                },
+                {
+                    "name": "Select1"
+                },
+                {
+                    "name": "Lookup1"
+                },
+                {
+                    "name": "Filter1"
+                },
+                {
+                    "name": "Select2"
+                },
+                {
+                    "name": "DerivedColumn1"
+                },
+                {
+                    "name": "AlterRow1"
+                }
+            ],
+            "script": "source(output(\n\t\tempid as integer,\n\t\tempname as string,\n\t\tgender as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdateFormats: ['MM/dd/yyyy'],\n\ttimestampFormats: ['MM/dd/yyyy HH:mm:ss'],\n\tpreferredIntegralType: 'integer',\n\tpreferredFractionalType: 'double',\n\tbooleanFormat: ['1', '0']) ~> source1\nsource(output(\n\t\tsurrkey as integer,\n\t\tempid as integer,\n\t\tempname as string,\n\t\tgender as string,\n\t\tcountry as string,\n\t\tisactive as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> empTbl\nsource1 derive(isactive = 1) ~> isActive\nempTbl select(mapColumn(\n\t\tSQL_surrkey = surrkey,\n\t\tSQL_empid = empid,\n\t\tSQL_empname = empname,\n\t\tSQL_gender = gender,\n\t\tSQL_country = country,\n\t\tSQL_isactive = isactive\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nsource1, Select1 lookup(empid == SQL_empid,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nLookup1 filter(!isNull(SQL_empid)) ~> Filter1\nFilter1 select(mapColumn(\n\t\tSQL_surrkey,\n\t\tSQL_empid,\n\t\tSQL_empname,\n\t\tSQL_gender,\n\t\tSQL_country,\n\t\tSQL_isactive\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2 derive(SQL_isactive = 0) ~> DerivedColumn1\nDerivedColumn1 alterRow(updateIf(1 ==1)) ~> AlterRow1\nisActive sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 2,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tempid,\n\t\tempname,\n\t\tgender,\n\t\tcountry,\n\t\tisactive\n\t)) ~> sink1\nAlterRow1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['surrkey'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tsurrkey = SQL_surrkey,\n\t\tempid = SQL_empid,\n\t\tempname = SQL_empname,\n\t\tgender = SQL_gender,\n\t\tcountry = SQL_country,\n\t\tisactive = SQL_isactive\n\t)) ~> sink2"
+        }
+    }
+}

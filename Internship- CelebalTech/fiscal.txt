@@ -1,0 +1,148 @@
+{
+    "name": "FiscalYear",
+    "properties": {
+        "activities": [
+            {
+                "name": "Lookup1",
+                "type": "Lookup",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "AzureSqlSource",
+                        "queryTimeout": "02:00:00",
+                        "partitionOption": "None"
+                    },
+                    "dataset": {
+                        "referenceName": "AzureSqlTable1",
+                        "type": "DatasetReference"
+                    },
+                    "firstRowOnly": false
+                }
+            },
+            {
+                "name": "ForEach1",
+                "type": "ForEach",
+                "dependsOn": [
+                    {
+                        "activity": "Lookup1",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "items": {
+                        "value": "@activity('Lookup1').output.value",
+                        "type": "Expression"
+                    },
+                    "isSequential": true,
+                    "activities": [
+                        {
+                            "name": "Copy data1",
+                            "type": "Copy",
+                            "dependsOn": [],
+                            "policy": {
+                                "timeout": "7.00:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "AzureSqlSource",
+                                    "additionalColumns": [
+                                        {
+                                            "name": "FiscalYear",
+                                            "value": {
+                                                "value": "'@{if(greater(int(formatDateTime(item().SampleDate,'MM')),03),formatDateTime(utcnow(),'yyyy'),sub(int(formatDateTime(utcnow(),'yyyy')),1))}'",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    ],
+                                    "queryTimeout": "02:00:00",
+                                    "partitionOption": "None"
+                                },
+                                "sink": {
+                                    "type": "AzureSqlSink",
+                                    "preCopyScript": "truncate table sinkFiscal",
+                                    "disableMetricsCollection": false
+                                },
+                                "enableStaging": false,
+                                "translator": {
+                                    "type": "TabularTranslator",
+                                    "mappings": [
+                                        {
+                                            "source": {
+                                                "name": "name",
+                                                "type": "String",
+                                                "physicalType": "varchar"
+                                            },
+                                            "sink": {
+                                                "name": "name",
+                                                "type": "String",
+                                                "physicalType": "varchar"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "name": "SampleDate",
+                                                "type": "DateTime",
+                                                "physicalType": "date"
+                                            },
+                                            "sink": {
+                                                "name": "SampleDate",
+                                                "type": "DateTime",
+                                                "physicalType": "date"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "name": "FiscalYear"
+                                            },
+                                            "sink": {
+                                                "name": "FiscalYear",
+                                                "type": "String",
+                                                "physicalType": "varchar"
+                                            }
+                                        }
+                                    ],
+                                    "typeConversion": true,
+                                    "typeConversionSettings": {
+                                        "allowDataTruncation": true,
+                                        "treatBooleanAsNumber": false
+                                    }
+                                }
+                            },
+                            "inputs": [
+                                {
+                                    "referenceName": "AzureSqlTable1",
+                                    "type": "DatasetReference"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "referenceName": "AzureSqlTable4",
+                                    "type": "DatasetReference"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2021-08-19T06:13:02Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

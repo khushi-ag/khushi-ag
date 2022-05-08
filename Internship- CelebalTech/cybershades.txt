@@ -1,0 +1,105 @@
+Round-1:
+
+Q1: 
+select * from Project where EndDate is not null;
++-----------+----------------------------------+---------------------------------------------------------+------------+------------+
+| ProjectID | Project_Name                     | Description                                             | StartDate  | EndDate    |
++-----------+----------------------------------+---------------------------------------------------------+------------+------------+
+| P01       | Training_Recruitment_of_Employee | Manages_details_of_recruitment_and_training_of_employee | 2019-04-01 | 2019-12-20 |
+| P02       | Payroll of Employee              |  Calculates salary of employee                          | 2019-05-11 | 2019-10-11 |
+| P03       | Employee Retirement Plan         | Manages details of retirement fund of an employee       | 2019-05-15 | 2019-07-05 |
+| P04       | Employee Grievance Cell          | Manages details of complaints of employee               | 2010-01-05 | 2020-12-15 |
+| P05       | Employee Transfer Management     | Manages details of location and transfer policy         | 2019-10-20 | 2020-01-20 |
++-----------+----------------------------------+---------------------------------------------------------+------------+------------+
+5 rows in set (0.00 sec)
+
+Q2:
+select * from Employee where EmployeeName like "%a_";
++------------+--------------+---------------+------------+-----------+------------+------------+--------+
+| EmployeeID | EmployeeName | Qualification | DOB        | Address   | JobProfile | Experience | Salary |
++------------+--------------+---------------+------------+-----------+------------+------------+--------+
+| Emp1       | Shridhar     | MCA           | 1990-09-29 | Ahmedabad | Developer  |          2 |  25000 |
+| Emp10      | Mohan        | MCA           | 1985-04-12 | Ahmedabad | BD         |         11 |  80000 |
+| Emp6       | Shriram      | MScIT         | 1988-09-30 | Delhi     | Analyst    |         10 |  70000 |
+| Emp9       | Mac          | MCA           | 1975-01-12 | Noida     | QA         |          2 |  25000 |
++------------+--------------+---------------+------------+-----------+------------+------------+--------+
+4 rows in set (0.00 sec)
+
+Q3 : discarded.
+
+Q4:
+select * from Project where StartDate like "2020%";
+Empty set, 1 warning (0.00 sec)
+
+Q5:
+select * from Project where Project_Name Like  "%i%";
++-----------+----------------------------------+---------------------------------------------------------+------------+------------+
+| ProjectID | Project_Name                     | Description                                             | StartDate  | EndDate    |
++-----------+----------------------------------+---------------------------------------------------------+------------+------------+
+| P01       | Training_Recruitment_of_Employee | Manages_details_of_recruitment_and_training_of_employee | 2019-04-01 | 2019-12-20 |
+| P03       | Employee Retirement Plan         | Manages details of retirement fund of an employee       | 2019-05-15 | 2019-07-05 |
+| P04       | Employee Grievance Cell          | Manages details of complaints of employee               | 2010-01-05 | 2020-12-15 |
++-----------+----------------------------------+---------------------------------------------------------+------------+------------+
+3 rows in set (0.00 sec)
+
+
+Q6: 
+ select * from Client where BudgetForProject between 7 and 12;
++----------+------------+------------------------+------------+-----------+------------------+
+| ClientID | ClientName | ClientOrganizationName | DOB        | Address   | BudgetForProject |
++----------+------------+------------------------+------------+-----------+------------------+
+| C12      | Abhishek   | Crossshare Pvt Ltd     | 1990/09/12 | Pune      |               12 |
+| C13      | Binoy      | Creator Pvt Ltd        | 1989/05/15 | Mumbai    |               10 |
+| C14      | Jeremy     | Softwork Pvt Ltd       | 1975/08/25 | Baroda    |                9 |
+| C15      | Parita     | Hardwork Pvt Ltd       | 1991/09/19 | Ahmedabad |                8 |
+| C16      | Aesha      | Kruskal Pvt Ltd        | 1986/02/30 | Rajkot    |               12 |
+| C18      | Saptak     | CRUD Pvt Ltd           | 1983/04/13 | Mumbai    |                9 |
+| C19      | Rakhi      | Hypersolution Pvt Ltd  | 1984/05/09 | Mumbai    |                9 |
+| C20      | Ramesh     | Query_Solver Pvt Ltd   | 1987/06/07 | Surat     |                8 |
++----------+------------+------------------------+------------+-----------+------------------+
+8 rows in set (0.01 sec)
+
+
+Q7:
+select JobProfile,count(JobProfile) from Employee group by JobProfile ;
++------------+-------------------+
+| JobProfile | count(JobProfile) |
++------------+-------------------+
+| Analyst    |                 2 |
+| BD         |                 1 |
+| Designer   |                 1 |
+| Developer  |                 3 |
+| QA         |                 3 |
++------------+-------------------+
+5 rows in set (0.00 sec)
+
+Q8:
+select * from ClientQuery where PostDate like "2020%";
++---------+----------+-----------------------+------------+-------------+-----------+
+| QueryID | ClientID | QueryDescription      | PostDate   | QueryStatus | ProjectID |
++---------+----------+-----------------------+------------+-------------+-----------+
+| 1       | C15      | Add Navigation Button | 2020-01-11 | 0000-00-00  | P01       |
+| 2       | C14      | Remove Field          | 2020-09-15 | 0000-00-00  | P02       |
+| 5       | C13      | Change Color          | 2020-01-11 | 0000-00-00  | P05       |
++---------+----------+-----------------------+------------+-------------+-----------+
+3 rows in set, 1 warning (0.00 sec)
+
+Q9:
+select Salary from Employee order by salary desc limit 2;
++--------+
+| Salary |
++--------+
+|  80000 |
+|  70000 |
++--------+
+2 rows in set (0.00 sec)
+
+
+Q10:
+ select * from Client where DOB = (select min(DOB) from Client);
++----------+------------+------------------------+------------+---------+------------------+
+| ClientID | ClientName | ClientOrganizationName | DOB        | Address | BudgetForProject |
++----------+------------+------------------------+------------+---------+------------------+
+| C14      | Jeremy     | Softwork Pvt Ltd       | 1975/08/25 | Baroda  |                9 |
++----------+------------+------------------------+------------+---------+------------------+
+1 row in set (0.00 sec)

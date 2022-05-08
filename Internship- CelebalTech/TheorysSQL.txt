@@ -1,0 +1,44 @@
+~~ibuki youtube
+
+DON'T QUIT..YOU CAN DO IT..
+
+logic for N no. of col. and x no. of condition
+--------------
+fk- can be null, duplicate pk values.
+pk- cannt be null, no duplicate values.
+
+master-actual tble /dimension table- scd-slowly changing tble on masters or trans that become dim 
+transaction table-actual data, fact-busi related field
+fact and dim table types.-----------
+
+PARTITION BY gives aggregated columns with each record in the specified table. PARTITION BY does not affect the number of rows returned, but it changes how a window function's result is calculated.
+ 
+A GROUP BY normally reduces the number of rows returned by rolling them up and calculating averages or sums for each row. 
+
+Row_Number() will generate a unique number for every row, even if one or more rows has the same value.
+
+RANK() will assign the same number for the row which contains the same value and skips the next number.
+
+DENSE_RANK () will assign the same number for the row which contains the same value without skipping the next number.
+
+UPSERT- UPDATE + INSERT
+
+SELECT CONVERT(CHAR(10), GETDATE() - 1, 101) --ONLY DATE OF YESTERDAY. HERE, 101- at formate in us
+SELECT GETDATE() -1 --DATE OF YESTERDAY, TIME -TODAY
+
+A Clustered index is a type of index in which table records are physically reordered to match the index. OR [it is a physically order od data in a table]
+P.K. automatically create C.I.
+
+A Non-Clustered index is a special type of index in which logical order of index does not match physical stored order of the rows on disk
+
+BUSINESS KEY
+
+A NATURAL KEY is a single column or a combination of columns that has a business value and occurs naturally in the real world 
+
+SURROGATE KEY in SQL Server is created a by assigning an identity property to a column that has a number data type. A surrogate key is a value generated right before the record is inserted into a table. [IDENITY(1,1)= AUTO INCR]
+
+partional index.
+fact table dimension/dim table
+-------------------------------------
+DATA DUMP- a large amount of data transferred from one system or location to another.
+

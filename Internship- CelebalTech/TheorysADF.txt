@@ -1,0 +1,138 @@
+ADF NOTES:
+
+MICROSOFT AZURE- formerly known as Windows Azure, is Microsoft's public cloud computing platform. It provides a range of cloud services, including compute, analytics, storage and networking. ... The Azure platform aims to help businesses manage challenges and meet their organizational goals.
+
+azure- to build,deploy n manage application.Azure is Microsoft's public cloud platform. Azure offers a large collection of services including platform as a service (PaaS), infrastructure as a service (IaaS), and managed database service capabilities
+
+Azure Data Factory is the platform that solves such data scenarios. It is the cloud-based ETL and data integration service that allows you to create data-driven workflows(pipelines) for orchestrating data movement and transforming data at scale
+
+A data factory can have one or more pipelines. A PIPELINES is a logical grouping of activities that together perform a task. We can xecute a pipeline either manually(on-demand) or by using trigger.
+
+>>DIFF B/W ETL AND ELT:
+ETL-extract transform load. data moves from the data source to staging into the data warehouse.
+ETL can help with data privacy and compliance by cleaning sensitive and secure data even before loading into the data warehouse.
+ETL is cost-effective then ELT
+
+ELT-extract load transform. leverages the data warehouse to do basic transformations.There is no need for data staging.ELT uses cloud-based data warehousing solutions for all different types of data - including structured, unstructured, semi-structured, and even raw data types. IT IS FELXIBLE AND EASE OF STORING UNSTRUCTURED DATA. it has high speed, low maintenance, quicker loading, 
+
+A data staging area is a temporary storage area between the data sources and a data warehouse.
+
+Extract: Extraction refers to pulling the source data from the original database or data source. With ETL, the data goes into a temporary staging area. With ELT, it goes immediately into a data lake storage system.
+
+Transform: Transformation refers to the process of changing the structure of the information, so it integrates with the target data system and the rest of the data in that system.
+
+Load: Loading refers to the process of depositing the information into a data storage system.
+
+DATASET is a named view of data that simply points or references the data you want to use in your activities as inputs and outputs. Datasets identify data within different data stores, such as tables, files, folders, and documents.
+
+ACTIVITY: The activities in a pipeline define actions to perform on your data.
+There are two main types of activities: Execution and Control Activities.
+1.Execution activities include data movement and data transformation activities.
+2.Control Activities: allow building complex, iterative processing logic within pipelines.
+
+1.data movement:copies data from a source data store to a sink data store.
+2.data transformation: in adf, it supports various transformation activities that can be added to pipelines either individually or chained with another activity. 
+
+TRIGGERS are another way that you can execute a pipeline run. Triggers represent a unit of processing that determines when a pipeline execution needs to be kicked off. Currently, Data Factory supports three types of triggers:
+
+>>Schedule trigger: A trigger that invokes a pipeline on a wall-clock schedule.
+
+>>Tumbling window trigger: A trigger that operates on a periodic interval, while also retaining state. Tumbling windows are a series of fixed-sized, non-overlapping, and contiguous time intervals.
+
+>>Event-based trigger: A trigger that responds to an event. they are of 2 type: storage , custom
+
+Storage Event- if changing occur in windows only
+
+Pipelines and triggers have a many-to-many relationship (except for the tumbling window trigger).
+
+DATA FLOW is a new feature of Azure Data Factory (ADF) that allows you to develop graphical data transformation logic that can be executed as activities within ADF pipelines.
+
+Mapping data flows are visually designed data transformations in Azure Data Factory. 
+
+-------------------------------
+The Integration Runtime (IR) is the compute infrastructure used by Azure Data Factory to provide the various data integration capabilities across different network environments. its type are:
+>>data flow
+>>data movement
+>>activity dispatch
+>>ssis (sql server integration service)
+------------------------------
+
+BUSINESS INTELLIGENCE(BI) - is used to convert your data into knowledge and that helps in taking decision making. types:SSIS,SSAS,SSRS
+in BI we collect the data 1st and then analyse the data and then view/present the data.
+so for create -SSIS, for analyse- SSAS, for view- SSRS.
+SSIS- collecting the data from various sources and the consolidating/gathering data at one place to analyse. 
+ssis-old version etl tool before azure, not user friendly n demartits 
+
+Azure Blob storage is a feature of Microsoft Azure. It allows users to store large amounts of unstructured data on Microsoft's data storage platform. 
+
+ISOLATION LEVEL-
+there are 3 of type: db (default and work on enitre db), connection (affect the queries using connection), statement (affect on a specific query).
+1.db- are of 2 types: 
+>>read committed - default for sql , azure sql db server- data avoid dirty reads,
+>>read committed snapshot(rcsi)- default for azure sql db.
+
+read uncommitted,repeated read, serializable,snapshot which can only be selected at the Connection and Statement level.
+
+TSQL-ACID PROPERTY: Atmoicity,consistency,isolation,durability
+isolation have 3 read phenomina: dirtyread, non-repeatable read, phantom read
+
+LOOKUP- retrive dataset action(content of file or table).
+FOREACH- execute set of activities for each object in the list
+------------------------
+
+@{concat('delete from ', item().tablename,' where date like ','''',formatDateTime(utcnow(),'yyyy'),'%','''')} 	//APPLY 4 QUOTES AT BEGIN-END('''') for print 1 quote at begin-end
+
+above stmt: delete from tblename where date like '2021%'
+
+#. in consideration task- inside for-each use sp then copy activity.
+------------------------
+
+CLUSTERED AND NON-CLUSTERED INDEX:
+There is only 1 clustered indx in a table, but can be created for multiple columns in a table. lustrd index sort the data. it doesnot occupy any extra space. 
+
+noon clustered index are unique. can create multiple non clustered index in a table.
+
+index seek- retrive selected rows(on where condition).
+index scan- retrive all rows from the table. it will decrease the query performance.
+
+INCLUDE : keyword, used for non clustered index, column which not used in on condition.
+
+implicit convert take times as compare to explicit conversion.
+
+FRAGMENTATION: if a table have both ci and nci, and we drop and recreate ci then Fragmentation occurs because nci will get updated twice.
+
+key lookup- on non-clustered index, when we select * then it will give scan and key lookup. to avoid this use select colname then will give seek and no key lookup. 
+The lookups refer to how many times the query required data to be pulled from the clustered index or the heap (does not have a clustered index).  Lookups are also something you want to try to avoid.
+
+NESTED LOOP- occurs when we join 2 or more tables.
+------------------------
+
+SAP connectors: Systems, Applications & Products in Data Processing, 6 types:
+BW: business warehouse. provides tools and functions that enable companies to attain these goals.
+1. SAP BW Open Hub- the object that allows you to distribute data from a BI system to non-SAP data marts, analytical applications, and other applications.
+
+2. SAP BW MDX (multidimensional expressions)- MDX uses a multidimensional data model to enable navigation in multiple dimensions, levels, and up and down a hierarchy.
+S/W: sap netweaver 7.5
+
+3. SAP HANA (High Performance Analytic Appliance)- Its primary function as the software running a database server is to store and retrieve data as requested by the applications.it will work only on linux os, not windows.
+S/W: ODBC driver
+
+4. SAP Table- used for create, display and maintained via sap data dictionary and are the building blocks of the SAP environment.
+
+5. SAP C4C (Cloud for Customer)- is a software as a service (SaaS) platform for sales and service. The platform is composed of SAP Cloud for Sales and SAP Cloud for Service, which are marketed as separate entities by SAP.
+
+6. SAP ECC (ERP Central Component).-ECC provides modules covering a full range of industry applications,including finance, logistics, HR, product planning and customer service, linked together into a single, customizable system run on a database of the user's choice.
+------------------------
+hackerrank-basis,moderate,hard;hakerearth...for certificate
+
+learn this:data module, data distribution, data mart, data dumps,partition, azure warehouse n data warehouse- diff b/w them
+
+types of fact and dim tble.
+what does merge fun. do, on what scenario.
+
+for high ir- https://cloud.netapp.com/blog/azure-high-availability-basic-concepts-and-a-checklist
+
+for isolation- https://media.datadirect.com/download/docs/odbc/allodbc/index.html#page/odbc/isolation-levels.html
+
+when ir type used- https://www.youtube.com/watch?v=pPvUICuZUq0&list=PLm7Nm9btqfe3QNbrLY-Vyu8-wh3EanG6t&index=8
+---------------------------------------------------------------------
